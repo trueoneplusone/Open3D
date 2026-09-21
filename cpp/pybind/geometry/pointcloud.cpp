@@ -257,7 +257,9 @@ Returns:
                  "found in Mehra et. al. 'Visibility of Noisy Point Cloud "
                  "Data', 2010.",
                  "camera_location"_a, "radius"_a)
-            .def("cluster_dbscan", &PointCloud::ClusterDBSCAN,
+            .def("cluster_dbscan",
+                 py::overload_cast<double, size_t, bool, bool>(
+                         &PointCloud::ClusterDBSCAN, py::const_),
                  "Cluster PointCloud using the DBSCAN algorithm  Ester et al., "
                  "'A Density-Based Algorithm for Discovering Clusters in Large "
                  "Spatial Databases with Noise', 1996. Returns a list of point "

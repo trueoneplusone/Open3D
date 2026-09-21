@@ -1559,6 +1559,20 @@ TEST_P(PointCloudPermuteDevices, ClusterDBSCAN) {
     EXPECT_EQ(cluster_sum, 398580);
 }
 
+TEST(TensorPointCloud, ClusterDBSCANOverloads) {
+    using ExistingSignature = core::Tensor (t::geometry::PointCloud::*)(
+            double, size_t, bool) const;
+    using LowMemorySignature = core::Tensor (t::geometry::PointCloud::*)(
+            double, size_t, bool, bool) const;
+
+    const auto existing = static_cast<ExistingSignature>(
+            &t::geometry::PointCloud::ClusterDBSCAN);
+    const auto low_memory = static_cast<LowMemorySignature>(
+            &t::geometry::PointCloud::ClusterDBSCAN);
+    EXPECT_NE(existing, nullptr);
+    EXPECT_NE(low_memory, nullptr);
+}
+
 TEST_P(PointCloudPermuteDevices, ClusterDBSCANBorderPoints) {
     const core::Device device = GetParam();
     // The first point is non-core and touches both disconnected components.

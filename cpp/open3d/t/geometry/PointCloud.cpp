@@ -1633,6 +1633,12 @@ std::tuple<TriangleMesh, core::Tensor> PointCloud::HiddenPointRemoval(
 
 core::Tensor PointCloud::ClusterDBSCAN(double eps,
                                        size_t min_points,
+                                       bool print_progress) const {
+    return ClusterDBSCAN(eps, min_points, print_progress, true);
+}
+
+core::Tensor PointCloud::ClusterDBSCAN(double eps,
+                                       size_t min_points,
                                        bool print_progress,
                                        bool precompute_neighbors) const {
     // Create a legacy point cloud with only points, no attributes to reduce

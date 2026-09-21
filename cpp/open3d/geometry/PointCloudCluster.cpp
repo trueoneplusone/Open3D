@@ -20,6 +20,12 @@ namespace geometry {
 
 std::vector<int> PointCloud::ClusterDBSCAN(double eps,
                                            size_t min_points,
+                                           bool print_progress) const {
+    return ClusterDBSCAN(eps, min_points, print_progress, true);
+}
+
+std::vector<int> PointCloud::ClusterDBSCAN(double eps,
+                                           size_t min_points,
                                            bool print_progress,
                                            bool precompute_neighbors) const {
     KDTreeFlann kdtree(*this);

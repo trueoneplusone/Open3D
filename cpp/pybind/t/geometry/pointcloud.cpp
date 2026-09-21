@@ -536,8 +536,10 @@ Example:
         pcd = pcd.select_by_index(pt_map)
         o3d.visualization.draw([pcd], point_size=5))");
     pointcloud.def(
-            "cluster_dbscan", &PointCloud::ClusterDBSCAN, "eps"_a,
-            "min_points"_a, "print_progress"_a = false,
+            "cluster_dbscan",
+            py::overload_cast<double, size_t, bool, bool>(
+                    &PointCloud::ClusterDBSCAN, py::const_),
+            "eps"_a, "min_points"_a, "print_progress"_a = false,
             py::arg("precompute_neighbors") = true,
             R"(Cluster PointCloud using the DBSCAN algorithm  Ester et al.,'A
 Density-Based Algorithm for Discovering Clusters in Large Spatial Databases

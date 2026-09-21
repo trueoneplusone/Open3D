@@ -1357,6 +1357,20 @@ TEST(PointCloud, ClusterDBSCAN) {
     EXPECT_EQ(pcd.ClusterDBSCAN(0.02, 10, false, false), cluster);
 }
 
+TEST(PointCloud, ClusterDBSCANOverloads) {
+    using ExistingSignature = std::vector<int> (geometry::PointCloud::*)(
+            double, size_t, bool) const;
+    using LowMemorySignature = std::vector<int> (geometry::PointCloud::*)(
+            double, size_t, bool, bool) const;
+
+    const auto existing = static_cast<ExistingSignature>(
+            &geometry::PointCloud::ClusterDBSCAN);
+    const auto low_memory = static_cast<LowMemorySignature>(
+            &geometry::PointCloud::ClusterDBSCAN);
+    EXPECT_NE(existing, nullptr);
+    EXPECT_NE(low_memory, nullptr);
+}
+
 TEST(PointCloud, ClusterDBSCANBoundaryCases) {
     struct TestCase {
         const char* name;
